@@ -1,11 +1,9 @@
-# Use OpenJDK as base image
 FROM openjdk:17-jdk-slim
 
-# Set working directory inside container
 WORKDIR /app
 
-# Copy JAR file into the container
-COPY target/*.jar app.jar
+COPY target/springboot-application-0.0.1-SNAPSHOT.jar app.jar
 
-# Run the JAR
-ENTRYPOINT ["java", "-jar", "app.jar"]
+EXPOSE 8081
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
