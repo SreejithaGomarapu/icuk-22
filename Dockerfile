@@ -1,6 +1,11 @@
-FROM frolvlad/alpine-oraclejdk8:slim
-VOLUME /tmp
-ADD targetspringboot-application-0.0.1-SNAPSHOT.jar springboot-application.jar
-RUN sh -c 'touch /springboot-application.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","springboot-application.jar"]
-EXPOSE 8081
+# Use OpenJDK as base image
+FROM openjdk:17-jdk-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy JAR file into the container
+COPY target/*.jar app.jar
+
+# Run the JAR
+ENTRYPOINT ["java", "-jar", "app.jar"]
